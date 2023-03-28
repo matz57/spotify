@@ -123,4 +123,6 @@
     border-collapse: collapse;
     border-spacing: 0;
   }
-  
+  .primaryLayout{
+    background: linear-gradient(180deg, #222222 0%, #1F1F1F 11.64%, #171717 25.66%, #161616 32.94%, #151515 35.98%, #131313 44.89%, #121212 55.22%, #121212 96%, #343434FF 100%);
+  }

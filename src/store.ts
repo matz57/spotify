@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import playlistsReducer from './Slices/playlistsSlice';
 
-export interface State {
-
+export interface RootState {
+  playlists: ReturnType<typeof playlistsReducer>;
 }
 
-export default configureStore({
-    reducer: {
-        playlists: playlistsReducer,
-    },
+export const store = configureStore({
+  reducer: {
+    playlists: playlistsReducer,
+  },
 });
