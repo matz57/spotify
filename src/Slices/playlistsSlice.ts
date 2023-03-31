@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Song {
+export interface Song {
   title: string;
   artist: string;
   genre: string;
@@ -12,6 +12,7 @@ interface Song {
 export interface Playlist {
   year: number;
   songs: Song[];
+  color: string;
 }
 
 interface PlaylistsState {

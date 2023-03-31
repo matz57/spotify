@@ -10,12 +10,17 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const { playlists } = useSelector((state: RootState) => state.playlists);
 
+  const getRandomColor = (): string => {
+    const color1 = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+    const color2 = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+    return `linear-gradient(135deg, ${color1} 0%, ${color2} 100%)`;
+  };
 
   useEffect(() => {
     const playlistsData: Playlist[] = [];
-    // Boucle sur les années pour créer les playlists
-    for (let year = new Date().getFullYear(); year >= 1950; year--) {
-      const playlist: Playlist = { year, songs: [] };
+    // créer les playlists
+    for (let year = new Date().getFullYear(); year >= 2010; year--) {
+      const playlist: Playlist = { year, songs: [], color: getRandomColor() }; // ajoute la couleur aléatoire à chaque playlist
       data.forEach((song: any) => {
         if (song.year === year) {
           playlist.songs.push(song);
@@ -29,32 +34,21 @@ const HomePage = () => {
   }, [dispatch]);
   
 
-  // génération d'une couleur aléatoire pour chaque card
-  const getRandomColor = (): string => {
-    const colors = [
-      'linear-gradient(135deg, #C0C0C0 0%, #808080 100%)',
-      'linear-gradient(135deg, #F08080 0%, #FFB6C1 100%)',
-      'linear-gradient(135deg, #FFC0CB 0%, #FF69B4 100%)',
-      'linear-gradient(135deg, #FFA07A 0%, #FF8C00 100%)',
-      'linear-gradient(135deg, #FFFF00 0%, #32CD32 100%)',
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
   return (
-    <div className="playlist-cards">
-      {playlists.map((playlist) => (
-        <Link
-          key={playlist.year}
-          to={`/playlist/${playlist.year}`}
-          style={{ background: getRandomColor() }}
-        >
-          <div className="playlist-card">
-            <h2>{`Top 50 - ${playlist.year}`}</h2>
-          </div>
-        </Link>
-      ))}
-    </div>
+<div>
+  <h1>Top 50</h1>
+  <div className="cards">
+    {playlists.map((playlist) => (
+      <Link key={playlist.year} to={`/playlist/${playlist.year}`} className="playlist-card">
+        <div className='square' style={{background: playlist.color}}></div>
+        <h1 className="title">Top 50</h1>
+        <h2 className="year">{`${playlist.year}`}</h2>
+      </Link>
+    ))}
+  </div>
+</div>
+
+
   );
 };
 

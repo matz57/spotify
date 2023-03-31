@@ -6,6 +6,7 @@ import Player from './Footer';
 import './index.css';
 import LeftDrawer from './LeftDrawer';
 import HomePage from './HomePage';
+import PlaylistDetailPage from './PlaylistDetailPage/PlaylistDetailPage';
 
 const App = () => {
     return (
@@ -17,11 +18,12 @@ const App = () => {
         <main className="App-main">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/playlist/:year" element={<PlaylistDetailPage />} />
           </Routes>
         </main>
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center', backgroundColor: 'rgb(34,34,34)', position: 'absolute',
+      <Footer style={{ textAlign: 'center', backgroundColor: 'rgb(34,34,34)', position: 'sticky',
           bottom: 0, width: '100%', }}><Player/></Footer>
     </Layout>
   </Layout>
