@@ -9,25 +9,27 @@ import HomePage from './HomePage';
 import PlaylistDetailPage from './PlaylistDetailPage/PlaylistDetailPage';
 
 const App = () => {
-    return (
+  return (
     <Layout style={{ minHeight: '100vh' }}>
-    <LeftDrawer/>
-    <Layout className='primaryLayout'>
-      <Content style={{ margin: '0 16px' }}>
-        <div style={{ marginLeft: '200px', padding: 24, minHeight: 360, }}>
-        <main className="App-main">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/playlist/:year" element={<PlaylistDetailPage />} />
-          </Routes>
-        </main>
-        </div>
-      </Content>
-      <Footer style={{ textAlign: 'center', backgroundColor: 'rgb(34,34,34)', position: 'sticky',
-          bottom: 0, width: '100%', }}><Player/></Footer>
+      <LeftDrawer />
+      <Layout className='primaryLayout'>
+        <Content style={{ margin: '0 16px' }}>
+          <div style={{ marginLeft: '200px', padding: 24, minHeight: 360, }}>
+            <main className="App-main">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/playlist/:year" element={<PlaylistDetailPage />} />
+              </Routes>
+            </main>
+          </div>
+        </Content>
+        <Footer style={{
+          textAlign: 'center', backgroundColor: 'rgb(34,34,34)', position: 'sticky',
+          bottom: 0, width: '100%',
+        }}><Player /></Footer>
+      </Layout>
     </Layout>
-  </Layout>
-);
+  );
 }
 
 

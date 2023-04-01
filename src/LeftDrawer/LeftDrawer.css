@@ -1,5 +1,34 @@
+.logo {
+    margin-bottom: 20%;
+    margin-left: 5%;
+}
 
-.logo{
-margin-bottom: 20%;
-margin-left: 5%;
+.ant-menu-dark{
+    background-color: black;
+}
+
+.ant-menu-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    color: white;
+}
+
+.ant-menu-item img {
+    width: 24px;
+    height: auto;
+    margin-right: 12px;
+}
+
+.ant-menu-item-selected {
+    background: linear-gradient(to bottom, #282828 0%, #121212 100%);
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+    background: linear-gradient(to bottom, #282828 0%, #121212 100%);
+    color: #1DB954;
+    font-weight: bold;
 }

@@ -3,5 +3,8 @@
     justify-content: flex-end;
     margin-bottom: 20px;
   }
-  
-  
+
+  .playlist-table {
+    background-color: #222;
+    color: #fff;
+  }

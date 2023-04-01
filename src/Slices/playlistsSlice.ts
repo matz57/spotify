@@ -10,29 +10,39 @@ export interface Song {
 }
 
 export interface Playlist {
-  year: number;
+  id: string;
+  name: string;
   songs: Song[];
   color: string;
 }
 
+export interface Top50Playlist extends Playlist {
+  year: number;
+}
+
 interface PlaylistsState {
   playlists: Playlist[];
+  top50Playlists: Top50Playlist[];
 }
 
 const initialState: PlaylistsState = {
   playlists: [],
+  top50Playlists: [],
 };
 
 const playlistsSlice = createSlice({
   name: 'playlists',
   initialState,
   reducers: {
-    setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
-      state.playlists = action.payload;
+    setTop50Playlists: (state, action: PayloadAction<Top50Playlist[]>) => {
+      state.top50Playlists = action.payload;
+    },
+    addPlaylist: (state, action: PayloadAction<Playlist>) => {
+      state.playlists.push(action.payload);
     },
   },
 });
 
-export const { setPlaylists } = playlistsSlice.actions;
+export const { setTop50Playlists, addPlaylist } = playlistsSlice.actions;
 
 export default playlistsSlice.reducer;
