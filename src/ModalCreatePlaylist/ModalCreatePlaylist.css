@@ -1,0 +1,43 @@
+.custom-input{
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 26px;
+    color: white;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+  }
+
+.custom-modal {
+    background-color: #1F1F1F;
+    color: white;
+}
+
+.custom-modal .ant-modal-content {
+    background-color: #282828;
+    color: white;
+  }
+
+.custom-modal .ant-modal-title {
+    color: white;
+    background-color: #1F1F1F;
+}
+
+.custom-modal .ant-modal-body {
+    background-color: #1F1F1F;
+    color: white;
+}
+
+.custom-modal .ant-btn {
+    background-color: #1DB954;
+    border-color: #1DB954;
+    color: white;
+}
+
+.custom-modal .ant-btn:hover,
+.custom-modal .ant-btn:focus {
+    background-color: #1DB954;
+    border-color: #1DB954;
+    color: white;
+}

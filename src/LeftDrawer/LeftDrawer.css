@@ -7,16 +7,6 @@
     background-color: black;
 }
 
-.ant-menu-item {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 16px;
-    padding: 12px 24px;
-    border-radius: 50px;
-    color: white;
-}
-
 .ant-menu-item img {
     width: 24px;
     height: auto;

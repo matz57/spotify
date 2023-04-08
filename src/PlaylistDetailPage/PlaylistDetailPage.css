@@ -1,10 +1,17 @@
 .filter-bar {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
 
-  .playlist-table {
-    background-color: #222;
-    color: #fff;
-  }
+.playlist-table {
+  background-color: #222;
+  color: #fff;
+}
+
+.unknowPlaylist {
+  display: 'flex';
+  justify-content: 'center';
+  align-items: 'center';
+  height: '100vh';
+}

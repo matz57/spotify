@@ -18,7 +18,7 @@ const App = () => {
             <main className="App-main">
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/playlist/:year" element={<PlaylistDetailPage />} />
+                <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
               </Routes>
             </main>
           </div>
