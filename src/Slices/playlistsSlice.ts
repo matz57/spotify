@@ -23,18 +23,20 @@ export interface Top50Playlist extends Playlist {
 interface PlaylistsState {
   playlists: Playlist[];
   top50Playlists: Top50Playlist[];
+  selectedSong: Song | null;
 }
 
 const initialState: PlaylistsState = {
   playlists: [],
   top50Playlists: [],
+  selectedSong: null,
 };
 
-const likedSongsPlaylist = initialState.playlists.find((playlist) => playlist.name === 'likedSongs');
+const likedSongsPlaylist = initialState.playlists.find((playlist) => playlist.id === 'likedSongs');
 if (!likedSongsPlaylist) {
   const newLikedSongsPlaylist: Playlist = {
     id: 'likedSongs',
-    name: 'likedSongs',
+    name: 'Liked Songs',
     songs: [],
     color: 'linear-gradient(to bottom, purple, white)'
   };
@@ -51,8 +53,8 @@ const playlistsSlice = createSlice({
     addPlaylist: (state, action: PayloadAction<Playlist>) => {
       state.playlists.push(action.payload);
     },
-    addSongToLikedSongs: (state, action: PayloadAction<Song>) => {
-      const likedSongsPlaylist = state.playlists.find((playlist) => playlist.name === 'likedSongs');
+    addLikedSongs: (state, action: PayloadAction<Song>) => {
+      const likedSongsPlaylist = state.playlists.find((playlist) => playlist.id === 'likedSongs');
 
       if (likedSongsPlaylist) {
         const existingSong = likedSongsPlaylist.songs.findIndex((song) =>
@@ -64,10 +66,13 @@ const playlistsSlice = createSlice({
           likedSongsPlaylist.songs.push(action.payload);
         }
       }
-    }
+    },
+    updateSelectedSong: (state, action: PayloadAction<Song | null>) => {
+      state.selectedSong = action.payload;
+    },
   },
 });
 
-export const { setTop50Playlists, addPlaylist, addSongToLikedSongs } = playlistsSlice.actions;
+export const { setTop50Playlists, addPlaylist, addLikedSongs, updateSelectedSong } = playlistsSlice.actions;
 
 export default playlistsSlice.reducer;

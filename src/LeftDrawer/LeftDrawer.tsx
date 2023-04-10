@@ -25,20 +25,9 @@ const LeftDrawer = () => {
 
   return (
     <Sider trigger={null} collapsible
-      style={{
-        overflow: 'auto',
-        overflowY: 'scroll',
-        maxHeight: `calc(100vh - ${120}px)`,
-        height: '100vh',
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        bottom: 0,
-        backgroundColor: 'black',
-      }}
-    >
+      style={{overflow: 'auto', overflowY: 'scroll', maxHeight: `calc(100vh - ${120}px)`,height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0, backgroundColor: 'black',}}>
       <div className="logo" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px 0', margin: '10px' }}>
-        <a href="/"><img src={spotify_logo} alt="Spotify Logo" style={{ width: '80%' }} /></a>
+        <img src={spotify_logo} alt="Spotify Logo" style={{ width: '80%' }} />
       </div>
       <Menu
         theme="dark"

@@ -23,10 +23,7 @@ const App = () => {
             </main>
           </div>
         </Content>
-        <Footer style={{
-          textAlign: 'center', backgroundColor: 'rgb(34,34,34)', position: 'sticky',
-          bottom: 0, width: '100%',
-        }}><Player /></Footer>
+        <Footer style={{textAlign: 'center', backgroundColor: 'rgb(34,34,34)', position: 'sticky', bottom: 0, width: '100%', maxHeight: 120, minHeight: 120}}><Player /></Footer>
       </Layout>
     </Layout>
   );

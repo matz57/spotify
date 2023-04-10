@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Table, Select, Input, ConfigProvider, theme } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import './PlaylistDetailPage.css';
-import { Song, addSongToLikedSongs } from '../Slices/playlistsSlice';
+import { Song, addLikedSongs, updateSelectedSong } from '../Slices/playlistsSlice';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -15,14 +15,30 @@ const PlaylistDetailPage = () => {
   const [searchColumn, setSearchColumn] = useState('');
   const [sortCol, setSortCol] = useState('');
   const [sortOrder, setSortOrder] = useState('');
-  const [favorite, setFavorite] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { top50Playlists, playlists } = useSelector((state: RootState) => state.playlists);
+  const likedSongsPlaylist = useSelector((state: RootState) => playlists.find((playlist) => playlist.id === 'likedSongs')
+  );
   const dispatch = useDispatch();
 
+  const isSongLiked = (song: Song) =>
+    likedSongsPlaylist && likedSongsPlaylist.songs.findIndex((likedSong) => likedSong.title === song.title && likedSong.artist === song.artist && likedSong.genre === song.genre) !== -1;
+
   const handleFavoriteClick = (record: any) => {
-    dispatch(addSongToLikedSongs(record));
-    setFavorite(!favorite);
+    dispatch(addLikedSongs(record));
+  };
+
+  const handleSelectedSong = (song: Song) => {
+    dispatch(updateSelectedSong(song));
+  };
+
+  const handleChange = (value: string) => {
+    setSortCol(value);
+    setSortOrder(value === '' ? '' : 'ascend');
+  };
+
+  const handleSearch = (value: string) => {
+    setSearchText(value);
   };
 
   const columns = [
@@ -31,7 +47,7 @@ const PlaylistDetailPage = () => {
       key: 'favorite',
       render: (record: Song) => (
         <span onClick={() => handleFavoriteClick(record)}>
-          {favorite ? <HeartFilled /> : <HeartOutlined />}
+          {isSongLiked(record) ? <HeartFilled style={{ color: 'rgba(29, 185, 84, 1)' }} /> : <HeartOutlined />}
         </span>
       ),
     },
@@ -43,30 +59,16 @@ const PlaylistDetailPage = () => {
     { title: 'Popularity', dataIndex: 'popularity', key: 'popularity' },
   ];
 
-  const handleChange = (value: string) => {
-    setSortCol(value);
-    setSortOrder('ascend');
-    if (value === '') {
-      setSortOrder('');
-    } else {
-      setSortOrder('ascend');
-    }
-  };
-
-  const handleSearch = (value: string) => {
-    setSearchText(value);
-  };
-
   const currentPlaylist = top50Playlists.find((playlist: any) => playlist.id === id) || playlists.find((playlist: any) => playlist.id === id);
 
   const data = currentPlaylist?.songs || [];
 
   const filteredData = sortOrder
-    ? [...data].sort((a: any, b: any) => {
-      const result = a[sortCol] > b[sortCol] ? 1 : -1;
-      return sortOrder === 'ascend' ? result : -result;
-    })
+    ? [...data].sort((a: any, b: any) =>
+      a[sortCol].localeCompare(b[sortCol], undefined, { numeric: true })
+    )
     : data;
+
 
   /* Si il n'y a rien dans la barre de recherche on affiche la liste triée sinon on affiche
   les résultats correspondants au texte dans la barre de recherche */
@@ -96,11 +98,16 @@ const PlaylistDetailPage = () => {
           theme={{ algorithm: theme.darkAlgorithm }}>
           <Select defaultValue="" style={{ width: 120 }} onChange={handleChange}>
             <Option value="">Default</Option>
-            {columns.map((column) => (
-              <Option key={column.key} value={column.key}>
-                {column.title}
-              </Option>
-            ))}
+            {columns.map((column) => {
+              if (column.key === 'favorite') {
+                return null;
+              }
+              return (
+                <Option key={column.key} value={column.key}>
+                  {column.title}
+                </Option>
+              );
+            })}
           </Select>
           <Search
             placeholder="Search"
@@ -111,7 +118,7 @@ const PlaylistDetailPage = () => {
         </ConfigProvider>
       </div>
       <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-        <Table className="playlist-table" columns={columns} dataSource={searchedData} rowKey={(record) => record.title} pagination={false} />
+        <Table className="playlist-table" columns={columns} dataSource={searchedData} rowKey={(record) => record.title} pagination={false}  onRow={(record) => ({onClick: () => handleSelectedSong(record)})} />
       </ConfigProvider>
     </div>
   );
