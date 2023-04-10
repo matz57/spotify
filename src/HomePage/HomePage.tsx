@@ -42,11 +42,11 @@ const HomePage = () => {
     <div>
       <h1>Your playlists</h1>
       <div className="cards">
-      <Link key='liked' to={`/liked-songs`} className="card">
-            <div className='square' style={{ background: 'linear-gradient(to bottom, purple, white)' }}></div>
-            <h1 className="title">Liked Songs</h1>
-          </Link>
-        {playlists.map((playlist) => (
+        <Link key='liked' to={`/playlist/likedSongs`} className="card">
+          <div className='square' style={{ background: 'linear-gradient(to bottom, purple, white)' }}></div>
+          <h1 className="title">Liked Songs</h1>
+        </Link>
+        {playlists.filter((playlist) => playlist.id !== 'likedSongs').map((playlist) => (
           <Link key={playlist.id} to={`/playlist/${playlist.id}`} className="card">
             <div className='square' style={{ background: playlist.color }}></div>
             <h1 className="title">{playlist.name}</h1>

@@ -3,7 +3,7 @@
     margin-left: 5%;
 }
 
-.ant-menu-dark{
+.ant-menu-dark {
     background-color: black;
 }
 
@@ -21,4 +21,15 @@
     background: linear-gradient(to bottom, #282828 0%, #121212 100%);
     color: #1DB954;
     font-weight: bold;
+}
+
+.playlist-link-list {
+    margin-left: 14%
+}
+
+.playlist-link-drawer {
+    display: block;
+    color: white;
+    font-size: 18px;
+    margin-top: 15px;
 }

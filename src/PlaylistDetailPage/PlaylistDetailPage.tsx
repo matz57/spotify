@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useParams } from 'react-router-dom';
 import { Table, Select, Input, ConfigProvider, theme } from 'antd';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import './PlaylistDetailPage.css';
+import { Song, addSongToLikedSongs } from '../Slices/playlistsSlice';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -13,10 +15,26 @@ const PlaylistDetailPage = () => {
   const [searchColumn, setSearchColumn] = useState('');
   const [sortCol, setSortCol] = useState('');
   const [sortOrder, setSortOrder] = useState('');
+  const [favorite, setFavorite] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { top50Playlists, playlists } = useSelector((state: RootState) => state.playlists);
+  const dispatch = useDispatch();
+
+  const handleFavoriteClick = (record: any) => {
+    dispatch(addSongToLikedSongs(record));
+    setFavorite(!favorite);
+  };
 
   const columns = [
+    {
+      title: '',
+      key: 'favorite',
+      render: (record: Song) => (
+        <span onClick={() => handleFavoriteClick(record)}>
+          {favorite ? <HeartFilled /> : <HeartOutlined />}
+        </span>
+      ),
+    },
     { title: 'Title', dataIndex: 'title', key: 'title' },
     { title: 'Artist', dataIndex: 'artist', key: 'artist' },
     { title: 'Genre', dataIndex: 'genre', key: 'genre' },
@@ -64,12 +82,15 @@ const PlaylistDetailPage = () => {
       );
 
   if (!currentPlaylist) {
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}><h1>Playlist non existante</h1></div>
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}><h1>Unknown playlist</h1></div>
   }
 
   return (
     <div className="playlist-detail-page">
-      <h1>{currentPlaylist?.name}</h1>
+      <div className='detail-header'>
+        <div className='detail-square' style={{ background: currentPlaylist?.color }}></div>
+        <h1 className='detail-title'>{currentPlaylist?.name}</h1>
+      </div>
       <div className="filter-bar">
         <ConfigProvider
           theme={{ algorithm: theme.darkAlgorithm }}>

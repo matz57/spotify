@@ -15,3 +15,15 @@
   align-items: 'center';
   height: '100vh';
 }
+
+.detail-square {
+  width: 185px;
+  height: 185px;
+}
+.detail-header{
+  display: flex;
+}
+
+.detail-title{
+  margin: 5%;
+}
