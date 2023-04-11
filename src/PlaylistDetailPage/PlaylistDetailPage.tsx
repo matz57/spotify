@@ -12,9 +12,8 @@ const { Search } = Input;
 
 const PlaylistDetailPage = () => {
   const [searchText, setSearchText] = useState('');
-  const [searchColumn, setSearchColumn] = useState('');
+  const [searchCol, setsearchCol] = useState('');
   const [sortCol, setSortCol] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
   const { id } = useParams<{ id: string }>();
   const { top50Playlists, playlists } = useSelector((state: RootState) => state.playlists);
   const likedSongsPlaylist = useSelector((state: RootState) => playlists.find((playlist) => playlist.id === 'likedSongs')
@@ -34,7 +33,6 @@ const PlaylistDetailPage = () => {
 
   const handleChange = (value: string) => {
     setSortCol(value);
-    setSortOrder(value === '' ? '' : 'ascend');
   };
 
   const handleSearch = (value: string) => {
@@ -63,23 +61,24 @@ const PlaylistDetailPage = () => {
 
   const data = currentPlaylist?.songs || [];
 
-  const filteredData = sortOrder
-    ? [...data].sort((a: any, b: any) =>
+  const filterSongs = [...data];
+  if (sortCol) {
+    filterSongs.sort((a: any, b: any) =>
       a[sortCol].localeCompare(b[sortCol], undefined, { numeric: true })
-    )
-    : data;
+    );
+  }
 
 
   /* Si il n'y a rien dans la barre de recherche on affiche la liste triée sinon on affiche
   les résultats correspondants au texte dans la barre de recherche */
-  const searchedData =
+  const searchSongs =
     searchText === ''
-      ? filteredData
-      : filteredData.filter((item: any) =>
+      ? filterSongs
+      : filterSongs.filter((item: any) =>
         Object.keys(item).some(
           (key) =>
             item[key].toString().toLowerCase().indexOf(searchText.toLowerCase()) > -1 &&
-            (searchColumn === '' || searchColumn === key)
+            (searchCol === '' || searchCol === key)
         )
       );
 
@@ -118,7 +117,7 @@ const PlaylistDetailPage = () => {
         </ConfigProvider>
       </div>
       <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-        <Table className="playlist-table" columns={columns} dataSource={searchedData} rowKey={(record) => record.title} pagination={false}  onRow={(record) => ({onClick: () => handleSelectedSong(record)})} />
+        <Table className="playlist-table" columns={columns} dataSource={searchSongs} rowKey={(record) => record.title} pagination={false} onRow={(record) => ({ onClick: () => handleSelectedSong(record) })} />
       </ConfigProvider>
     </div>
   );

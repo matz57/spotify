@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import { setTop50Playlists, Playlist, Top50Playlist } from '../Slices/playlistsSlice';
@@ -7,6 +7,7 @@ import './HomePage.css';
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const generate = useRef(false);
   const { top50Playlists, playlists } = useSelector((state: RootState) => state.playlists);
 
   // générer les playlists Top 50 dès la page Home
@@ -34,9 +35,15 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    const top50PlaylistsData: Top50Playlist[] = generateTop50Playlists();
-    dispatch(setTop50Playlists(top50PlaylistsData));
-  }, [dispatch]);
+    if (generate.current === false) {
+      if (top50Playlists.length === 0) {
+        dispatch(setTop50Playlists(generateTop50Playlists()));
+        return () => {
+          generate.current = true;
+        }
+      }
+    }
+  }, [top50Playlists]);
 
   return (
     <div>

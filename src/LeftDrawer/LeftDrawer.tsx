@@ -32,9 +32,9 @@ const LeftDrawer = () => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={['/']}
+        defaultSelectedKeys={['1']}
       >
-        <Menu.Item key="/" icon={<img src={home_logo} alt="Home" />}>
+        <Menu.Item key="1" icon={<img src={home_logo} alt="Home" />}>
           <Link to="/">Home</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<img src={create_logo} alt="Create Playlist" />} onClick={handleCreatePlaylistClick}>
